@@ -56,6 +56,27 @@ nowm_main() {
 
 noargs() { if [ -z "${DISPLAY}" ]; then exec startx "$(which nowm)"; else nowm_main; fi; }
 
+usage() {
+    echo "Usage: nowm [action]
+    
+Available actions:
+    resize [w] [h]
+    resize_relative [w] [h]
+    move [x] [y]
+    move_relative [x] [y]
+    center
+    snap [left|right|top|bottom]
+    pointer_focus
+    select_focus
+    close
+    quit
+    kill
+    logout
+    help
+
+To learn more about these commands see nowm(1)"
+}
+
 case "${1}" in
     "")              noargs || exit 1             ;;
     resize)          resize          "${2}" "${3}";;
@@ -70,5 +91,6 @@ case "${1}" in
     quit)            quit                         ;;
     kill)            window_kill                  ;;
     logout)          nowm_logout                  ;;
+    help|--help|-h)  usage                        ;;
     *)               exit 1                       ;;
 esac
